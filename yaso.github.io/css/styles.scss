@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:100italic,300,300italic,400,400italic,500italic,500,700);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic,700italic);
 
-@import "fa/font-awesome";
 @import "icons";
 @import "settings";
 
@@ -11,17 +10,18 @@ h1, h2, h3, h4, h5, p, * {
 }
 h1 {
  	font-size: $h1-size;
-    font-weight: 500;
+    border-bottom: 2px solid #000;
+    font-weight: 900;
 }
 
 h2 {
 	font-size: $h2-size;
-	font-weight: 300;
+	font-weight: 500;
 }
 
 h3 {
 	font-size: $h3-size;
-	font-weight: 500;
+	font-weight:300;
 }
 p {
 	font-size: $text-size;
@@ -38,48 +38,91 @@ strong, .bold {
 }
 
 header {
-
-	border-top: 11px solid #000;
 	padding-top: 100px;
 	background-size: auto, 315px 100px, 313px 476px;
 	background-repeat: no-repeat;
 	background-image: url(../images/neuronio1.svg), radial-gradient(ellipse, white 50%, transparent 100%) , linear-gradient(to bottom, #EFEFEF, #EFEFEF); 
 	animation: brilho 7s linear infinite;
-	.top-detail {
-		width: 320px;
-		height: 10px;
-		display: block;
-		position: absolute;
-		top: 11px;
-		left: 0;
-		border-top: 10px solid $highlight-color;
-	}
+
 	.containerLogo {
-		padding: 0 25px 40px;
 		.detalheLogo {
 			margin-top: -30px;
 		}
-		.listSocialMidias {
-			margin: 35px 0;
+	}
+	nav {
+		position: fixed;
+		width: 100%;
+		background: rgba(255,255,255,.8);
+		padding: 10px;
+		top: 0;
+		left: 0;
+
+		ul {
 			li {
 				display: inline-block;
-				margin: 0 5px;
+				margin-right: 10px;
+				margin-left: 10px;
 				a {
-					background: #000;
-					border-radius: 100%;
-					color: #FFF;
-					width: 25px;
-					height: 25px;
-					display: block;
-					font-size: .9em;
-					text-align: center;
-					> i {
-						display: inline-block;
-						padding-top: 6px;
-					}
+					text-transform: uppercase;
+					color: $nav-links-color;
+					font-weight: 500;  
 					&:hover {
-						background: #353535;
+						color: $highlight-color;
 					}
+
+				}
+			}
+		}
+
+		@media only screen and (max-width: 40em) {
+			
+			text-align: right;
+			&.collapse {
+				label {  
+				  cursor: pointer;
+				  margin-right: 20px;
+				  font-weight: 800;
+				  color: #757575;
+				}
+				#menu-toggle {
+				  display: none; /* hide the checkbox */
+				}
+				ul {
+				  display: none;
+				  li {
+				  	display: block;
+				  }
+				}
+				#menu-toggle:checked + ul {
+				  display: block;
+				}
+			}
+
+
+
+		} /* max-width 640px, mobile-only styles, use when QAing mobile issues */
+
+	}
+	.listSocialMidias {
+		margin: 35px 0	;
+		li {
+			display: inline-block;
+			margin: 0 5px;
+			a {
+				background: #000;
+				border-radius: 100%;
+				color: #FFF;
+				width: 30px;
+				height: 30px;
+				display: block;
+				text-align: center;
+				font-size: $text-size;
+				> i {
+					display: inline-block;
+					padding-top: 5px;
+				}
+				&:hover {
+					background: #353535;
 				}
 			}
 		}
@@ -94,6 +137,7 @@ header {
 }
 .posts {
 	> ul {
+		margin-left: 20px;
 		> li {
 			margin-bottom: 20px;
 		}
@@ -115,9 +159,6 @@ header {
 	}
 }
 
-.chamadasResume {
-	padding: 0 25px;
-}
 .chamadasResume.listas ul {
 
 	list-style-position: outside;
@@ -127,20 +168,12 @@ header {
 	}
 
 }
-img {
-	background-color: transparent;
-}
-.image {
-	margin-bottom:20px;
-	font-size: .7em;
-	.caption {
-		font-weight: bold;
-	}
-}
+
+
 main {
 	padding-bottom: 160px;
 	.chamadasHome {
-		padding: 70px 25px 0;
+		padding-top: 70px;
 	}
 }
 .portifolioItens {
@@ -152,13 +185,11 @@ main {
 			font-size: .9em;
 		}
 	}
-}
-.wrap-padding {
-	padding-left: 25px;
-	padding-right: 25px;
+
+
+
 }
 .portifolioTimeline {
-		margin-left: 50px;
 		li {
 			margin:0;
 			border-left:1px solid #000;
@@ -167,10 +198,10 @@ main {
 				padding-top:15px;
 				&:hover {
 					> img, > .box {
-						margin-left: -30px;
+						margin-left: -35px;
 					}
 					> div.infos {
-						margin-left: 27px;
+						margin-left: 25px;
 					}
 				}
 				> .box {
@@ -180,7 +211,7 @@ main {
 					background-color: $highlight-color;
 				}
 				> img, > .box {
-					margin-left:-22px;
+					margin-left:-25px;
 					float: left;
 					-webkit-transition: all 200ms ease;
 					-moz-transition: all 200ms ease;
@@ -188,7 +219,6 @@ main {
 					-o-transition: all 200ms ease;
 				}
 				> div.infos {
-					max-width: 70%;
 					margin-left: 15px;
 					float: left;
 					-webkit-transition: all 200ms ease;
@@ -237,62 +267,41 @@ main {
 	}
 }
 
-.vertical.menu {
-	background: #FFF;
-	border-left: 1px solid #000;
-	a {
-		display: block;
-		width: 100%;
-		color: $nav-links-color;
-		&:hover {
-			background-color: $highlight-color;
-		}
-	}
-}
-
-ul.custom-list {
-	padding: 0 0 0 30px;
-	list-style-type: circle;
-	li {
-		margin-bottom: 5px;	
-		font-size: .9em;
-	}
-}
-
 footer {
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	.menu {
+	ul {
+		text-align: center;
+		padding: 8px 0;
+		display: block;
+		width: 100%;
 		background: #000;
-		ul {
-			padding: 8px;
-			display: block;
-			width: 100%;
-			margin: 0;
-			li {
-				display: inline-block;
-				margin: 0 10px;
-				a {
-					color: #fff;
-					font-weight: 500;
-					&:hover {
-						color: $highlight-color;
-					}
+		margin: 0;
+		li {
+			display: inline-block;
+			margin: 0 10px;
+			a {
+				color: #fff;
+				font-weight: 500;
+				&:hover {
+					color: $highlight-color;
 				}
 			}
 		}
 	}
-	.info {
+	
+	p {
+		width: 100%;
+		text-align: center;
+		margin: 0;
 		background: $highlight-color;
-		p {
-			margin: 0;
-			font-size: .8em;
-			padding: 5px 25px;
-		}
+		font-size: .8em;
+		padding: 5px 0;
 	}
 }
+
 
 @keyframes brilho {
 	0% { 
