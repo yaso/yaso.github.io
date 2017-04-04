@@ -43,7 +43,7 @@ header {
 	padding-top: 100px;
 	background-size: auto, 315px 100px, 313px 476px;
 	background-repeat: no-repeat;
-	background-image: url(../images/neuronio1.svg), radial-gradient(ellipse, white 50%, transparent 100%) , linear-gradient(to bottom, #EFEFEF, #EFEFEF); 
+	background-image: url(../images/neuronio1.svg), radial-gradient(ellipse, white 50%, transparent 100%) , linear-gradient(to bottom, #EFEFEF, #EFEFEF);
 	animation: brilho 7s linear infinite;
 	.top-detail {
 		width: 320px;
@@ -115,6 +115,10 @@ header {
 	}
 }
 
+.linksArticles {
+	font-size: $h5-size;
+}
+
 .chamadasResume {
 	padding: 0 25px;
 }
@@ -122,13 +126,15 @@ header {
 
 	list-style-position: outside;
 	li:before {
-		margin: 0 0 20px 20px; 
+		margin: 0 0 20px 20px;
 		content: "\2605";
 	}
 
 }
 img {
 	background-color: transparent;
+	float: left;
+  margin: 15px 31px 12px -5px;
 }
 .image {
 	margin-bottom:20px;
@@ -153,6 +159,16 @@ main {
 		}
 	}
 }
+hr.fancy-line {
+    border: 0;
+    height: 2px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(215,215,215,0.75), rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(215,215,215,0.75), rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(215,215,215,0.75), rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(215,215,215,0.75), rgba(0,0,0,0));
+		margin-bottom: 2em;
+}
+
 .wrap-padding {
 	padding-left: 25px;
 	padding-right: 25px;
@@ -223,7 +239,7 @@ main {
 		.gallery {
 
 			.column {
-				margin-bottom: 20px;	
+				margin-bottom: 20px;
 			}
 		}
 
@@ -254,7 +270,7 @@ ul.custom-list {
 	padding: 0 0 0 30px;
 	list-style-type: circle;
 	li {
-		margin-bottom: 5px;	
+		margin-bottom: 5px;
 		font-size: .9em;
 	}
 }
@@ -295,13 +311,13 @@ footer {
 }
 
 @keyframes brilho {
-	0% { 
+	0% {
 		background-position: 0px 0px, 0px -200px, 1px 1px;
 	}
-	95% { 
+	95% {
 	background-position: 0px 0px, 0px -200px, 1px 1px;
 	}
-	100% { 
+	100% {
 	background-position: 0px 0px, 0px 300px, 1px 1px;
 	}
 }
