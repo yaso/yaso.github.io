@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/yaso
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://yaso.is
+  * I am yaso (https://keybase.io/yaso) on keybase.
+  * I have a public key with fingerprint ACC1 7588 6087 7FA7 7E1B  D2F0 2CC0 AE6E 3B83 3F78
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101e16b74f324845d42f7d52165d546b3ed83a0d3682efbbfe13461500e25969e4d0a",
+            "fingerprint": "acc1758860877fa77e1bd2f02cc0ae6e3b833f78",
+            "host": "keybase.io",
+            "key_id": "2cc0ae6e3b833f78",
+            "kid": "0101e16b74f324845d42f7d52165d546b3ed83a0d3682efbbfe13461500e25969e4d0a",
+            "uid": "98c6719da4a9595b1126615ed1725019",
+            "username": "yaso"
+        },
+        "service": {
+            "hostname": "yaso.is",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1499619354,
+    "expire_in": 157680000,
+    "prev": "729ad6373a2830ccd82dbd6d073063da7dc33a19ae88dc807e01496796561272",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.72
+Comment: https://keybase.io/crypto
+
+yMIgAnicrZJbSBRRGMd3s5tbWu2DQRexSVRM7Zy5nDMzFEQWohVEECFdtjNzzuqU
+7mw7s+ayLl2ILlBIFFZWENIFUSQJu1APGYFEFtFDRYmEBhEZilnZDTojBT302Hk5
+nO/8/v/vwnc/I80X8B8o63m54npelv9h97G4r9LYPi8pGDZNCHpS2MkmLlZDmeOG
+dlpU0AUAAWQQGVgOS6KsygqVxTCmigiRQhUZGRKjqkQAlZAqsrBhhBmUZAQVAJio
+aEhjMgVEKBLCVqSKxaIxK+JyW2KaECuqioCKcZhgzKBBxTAQTRMQhphkqJIUxioX
+VtuOp+DFGcRhJZbNY/wRmijvH/x/rjs+YaepJsJQo0QmmqIpBoQi4jCjEIsKgJoH
+OiwWIbWM0wni2EKqSOCROstk3lC9Lv76LbEcLonGbNc27RoerHbdqO5p3ETUg3Yz
+I/RbHjKsCOXT44I6FnMsOyLokJOma3l+UNY0BDVJkYsEVh+1YixkeYSCkQr48dKw
+Om6JRY1QJGGJiKoETJOqIjUoogBLAEmUYGpKEoEaYapKTRVgBrg3whpSEBSxKHgN
+7YrYgs4zuaSKWzpWVYS48RgTUvfubpns8wd8U6dM8rbKF0if/WfXvn2c9nNOZ07O
+0Rd71rbG9YsV6Z/1hW0XClcNNR5fPHD1dnFo+avCvhfXnhSYZ1dPuvSh9M2twuHN
+XfHnj46cmjsCg58OBbO7Xt0tLn97AhRX7FvaP5xo2vB01lBF0qjKWdnXMn9B/cyC
+3tT6G08fLeyptP3lXYs6VrIRRpqPj19Pvhvd0oC7enKfHOpQG4NfOse2rcv72pz3
+GNZm15YHljTeXJMc9G8+jFo3dpqnk77+/vJlWaEFTvfYSTD9tdCSXTqz/fvW3LYr
+7zPTHlw+6O6zNw2PZzadLyoTlZQeaIFl7rkderD/weDWAbLozt5nY+3a/uW9Gd0z
+8pt3/RCWNeSX9jaMnvkFvlM1mg==
+=yF8c
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/yaso
+
+==================================================================
