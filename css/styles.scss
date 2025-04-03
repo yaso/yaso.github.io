@@ -1,9 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:100italic,300,300italic,400,400italic,500italic,500,700);
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic,700italic);
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap');
 
 @import "fa/font-awesome";
 @import "icons";
 @import "settings";
+
+$font-default: 'Playfair Display', serif;
 
 h1, h2, h3, h4, h5, p, * {
 	font-family: $font-default;
@@ -38,7 +39,6 @@ strong, .bold {
 }
 
 header {
-
 	border-top: 11px solid #000;
 	padding-top: 100px;
 	background-size: auto, 315px 100px, 313px 476px;
@@ -145,8 +145,29 @@ img {
 }
 main {
 	padding-bottom: 160px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	.chamadasHome {
 		padding: 70px 25px 0;
+	}
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		justify-content: space-around;
+		.column {
+			flex: 1 1 100%;
+			max-width: 100%;
+			padding: 15px;
+			box-sizing: border-box;
+		}
+		@media(min-width: 768px) {
+			.column {
+				flex: 1 1 45%;
+				max-width: 45%;
+			}
+		}
 	}
 }
 .portifolioItens {
