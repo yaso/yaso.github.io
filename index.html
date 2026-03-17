@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasodara Córdova — Privacy Engineer & Digital Identity Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a08;
+    --bg2: #111110;
+    --bg3: #1a1a17;
+    --surface: #1e1e1b;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --text: #e8e6df;
+    --text-muted: #888780;
+    --text-dim: #4a4946;
+    --accent: #f0a020;
+    --accent-dim: rgba(240,160,32,0.12);
+    --accent-hover: #f5b840;
+    --red: #e05a3a;
+    --teal: #2db89a;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'Instrument Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(240,160,32,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(52px, 5.5vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin-bottom: 40px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: #0a0a08;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+  /* HERO RIGHT — tag cloud / identity map */
+  .hero-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* GANTT TIMELINE */
+  .career-arc { position: relative; }
+
+  .arc-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  .gantt { display: flex; flex-direction: column; gap: 7px; }
+
+  .gantt-years {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 130px;
+    margin-bottom: 10px;
+  }
+
+  .gantt-year-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    gap: 8px;
+    min-height: 26px;
+  }
+
+  .gantt-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-align: right;
+    line-height: 1.2;
+  }
+
+  .gantt-label small {
+    display: block;
+    font-size: 9px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  .gantt-track {
+    position: relative;
+    height: 22px;
+    background: var(--bg3);
+    border-radius: 2px;
+  }
+
+  .gantt-bar {
+    position: absolute;
+    top: 2px;
+    height: 18px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding: 0 7px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: filter 0.2s;
+    cursor: default;
+  }
+
+  .gantt-bar:hover { filter: brightness(1.25); }
+
+  .gantt-bar.dim {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .gantt-bar.mid {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+  }
+
+  .gantt-bar.amber {
+    background: rgba(240,160,32,0.15);
+    border: 1px solid rgba(240,160,32,0.35);
+    color: var(--accent);
+  }
+
+  .gantt-bar.teal {
+    background: rgba(45,184,154,0.15);
+    border: 1px solid rgba(45,184,154,0.35);
+    color: var(--teal);
+  }
+
+  .gantt-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 3px 0 3px 130px;
+  }
+
+  .gantt-pulse {
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin-right: 5px;
+    flex-shrink: 0;
+    animation: arcpulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes arcpulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 0 48px;
+  }
+
+  .stat {
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 100px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .about-text .pullquote {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+
+  .credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cred-item {
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .cred-item:hover { border-color: var(--border-strong); }
+  .cred-item a { color: var(--text); transition: color 0.2s; }
+  .cred-item a:hover { color: var(--accent); }
+
+  .cred-icon {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 32px;
+    margin-top: 2px;
+  }
+
+  .cred-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .cred-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* EXPERTISE TAGS */
+  .expertise-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .expertise-cell {
+    background: var(--bg2);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .expertise-cell:hover { background: var(--bg3); }
+
+  .expertise-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .expertise-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .expertise-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 1px;
+    letter-spacing: 0.06em;
+  }
+
+  /* WORK / PROJECTS */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+    cursor: default;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+
+  .project-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .project-card:hover::before { transform: scaleY(1); }
+
+  .project-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    align-items: center;
+    background: var(--bg2);
+    border-color: rgba(240,160,32,0.2);
+  }
+
+  .project-card.featured::before { transform: scaleY(1); }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .project-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  .project-status {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 1px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .status-active { background: rgba(45,184,154,0.15); color: var(--teal); border: 1px solid rgba(45,184,154,0.3); }
+  .status-pilot { background: rgba(240,160,32,0.12); color: var(--accent); border: 1px solid rgba(240,160,32,0.25); }
+  .status-complete { background: rgba(255,255,255,0.05); color: var(--text-dim); border: 1px solid var(--border); }
+
+  .project-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .project-card.featured .project-title { font-size: 28px; }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .project-impact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .impact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .impact-item::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* SPEAKING CAROUSEL */
+  .speaking-carousel {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carousel-slide {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    filter: grayscale(20%);
+  }
+
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,10,8,0.2) 0%,
+      rgba(10,10,8,0.4) 40%,
+      rgba(10,10,8,0.88) 100%
+    );
+  }
+
+  .carousel-caption {
+    position: absolute;
+    bottom: 100px;
+    right: 48px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .carousel-content {
+    position: absolute;
+    bottom: 52px;
+    left: 48px;
+    right: 48px;
+    pointer-events: none;
+  }
+
+  .carousel-controls {
+    position: absolute;
+    bottom: 24px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .carousel-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .carousel-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .carousel-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .carousel-dot.active { background: var(--accent); }
+
+  /* SPEAKING */
+  .speaking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .talk-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .talk-row.has-thumb { grid-template-columns: 120px 1fr auto; }
+
+  .talk-row:first-child { border-top: 1px solid var(--border); }
+
+  .talk-thumb {
+    width: 80px;
+    height: 56px;
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .talk-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    filter: grayscale(15%);
+    transition: filter 0.3s;
+  }
+
+  .talk-thumb img:hover { filter: grayscale(0%); }
+
+  .talk-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    padding-top: 3px;
+  }
+
+  .talk-content {}
+
+  .talk-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .talk-event {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .talk-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(240,160,32,0.2);
+    color: var(--accent);
+    border-radius: 1px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  /* WRITING */
+  .writing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .writing-card {
+    padding: 28px 28px 24px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 2px;
+    transition: border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .writing-card:hover { border-color: var(--border-strong); }
+
+  .writing-pub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .writing-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+    flex: 1;
+  }
+
+  .writing-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .writing-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .writing-link {
+    color: var(--accent);
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .writing-link:hover { color: var(--accent-hover); }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(40px, 4vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .contact-heading em { font-style: italic; color: var(--accent); }
+
+  .contact-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--surface);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+  .contact-link-icon {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .contact-link-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .availability-card {
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid rgba(240,160,32,0.2);
+    border-radius: 2px;
+  }
+
+  .avail-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .avail-dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .avail-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .avail-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .avail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .avail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .avail-item-dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text-muted); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s ease forwards;
+    opacity: 0;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .identity-map { height: 280px; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); margin: 0 24px; }
+    .speaking-carousel { height: 320px; margin-bottom: 40px; }
+    .carousel-content { left: 24px; right: 24px; bottom: 32px; }
+    .carousel-caption { right: 24px; }
+    .carousel-controls { right: 24px; }
+    .speaking-hero-sub { font-size: 14px; }
+    section { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; gap: 24px; }
+    .talk-row { grid-template-columns: 80px 1fr; gap: 16px; }
+    .talk-tag { display: none; }
+    .writing-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">yaso.github.io</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#speaking">Speaking</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-label fade-up">Technology · Policy · Product · Trust is architecture</div>
+    <h1 class="fade-up">Yasodara<br><em>Córdova</em></h1>
+    <p class="hero-desc fade-up">I build at the intersection of technology, policy, and people. From civic AI to W3C standards to government digital transformation — I move between the technical, the political, and the human layers that most people treat as separate problems.</p>
+    <div class="hero-cta fade-up">
+      <a href="#work" class="btn-primary">View Work →</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="career-arc">
+      <div class="arc-label">Career arc — parallel tracks</div>
+
+      <div class="gantt">
+
+        <!-- Year markers -->
+        <div class="gantt-years">
+          <span class="gantt-year-label">2009</span>
+          <span class="gantt-year-label">2012</span>
+          <span class="gantt-year-label">2016</span>
+          <span class="gantt-year-label">2019</span>
+          <span class="gantt-year-label">2023</span>
+          <span class="gantt-year-label">now</span>
+        </div>
+
+        <!-- UnB 2009–2011 → left:0% width:11.1% -->
+        <div class="gantt-row">
+          <div class="gantt-label">UnB<small>Professor</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar dim" style="left:0%;width:11.1%;">2009–11</div>
+          </div>
+        </div>
+
+        <!-- W3C 2012–2016 → left:16.7% width:22.2% -->
+        <div class="gantt-row">
+          <div class="gantt-label">W3C Brazil<small>Chair</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar mid" style="left:16.7%;width:22.2%;">2012–16</div>
+          </div>
+        </div>
+
+        <div class="gantt-divider"></div>
+
+        <!-- Serenata 2017–2019 → left:44.4% width:11.1% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Serenata<small>CEO · B-Corp</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar amber" style="left:44.4%;width:11.1%;">2017–19</div>
+          </div>
+        </div>
+
+        <!-- Berkman Klein 2016–2018 → left:38.9% width:11.1% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Berkman Klein<small>Fellow · Harvard</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar amber" style="left:38.9%;width:11.1%;">2016–18</div>
+          </div>
+        </div>
+
+        <!-- HKS 2018–2020 → left:50% width:11.1% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Harvard KSG<small>MPA · Full scholarship</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar amber" style="left:50%;width:11.1%;">2018–20</div>
+          </div>
+        </div>
+
+        <div class="gantt-divider"></div>
+
+        <!-- World Bank 2019–2021 → left:55.6% width:11.1% -->
+        <div class="gantt-row">
+          <div class="gantt-label">World Bank<small>Consultant</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar mid" style="left:55.6%;width:11.1%;">2019–21</div>
+          </div>
+        </div>
+
+        <!-- Unico 2021–2025 → left:66.7% width:22.2% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Unico IDtech<small>Principal Researcher</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar mid" style="left:66.7%;width:22.2%;">2021–25</div>
+          </div>
+        </div>
+
+        <div class="gantt-divider"></div>
+
+        <!-- Co-DevelopFund 2023–now → left:77.8% width:16.7% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Co-DevelopFund<small>Investment Committee</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar teal" style="left:77.8%;width:16.7%;">
+              <span class="gantt-pulse"></span>2023–
+            </div>
+          </div>
+        </div>
+
+        <!-- Dataprev 2026–now → left:94.4% width:5.6% -->
+        <div class="gantt-row">
+          <div class="gantt-label">Dataprev<small>Deputy Director</small></div>
+          <div class="gantt-track">
+            <div class="gantt-bar teal" style="left:94.4%;width:5.6%;">
+              <span class="gantt-pulse"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat">
+    <div class="stat-num">15+</div>
+    <div class="stat-label">Years across product, standards, research & government</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">2×</div>
+    <div class="stat-label">Vladimir Herzog Award in Journalism & Human Rights</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">200M</div>
+    <div class="stat-label">Social security beneficiaries affected by the VC architecture at Dataprev</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">W3C</div>
+    <div class="stat-label">Data on the Web Best Practices chair · 30+ contributors globally</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>My career doesn't fit a single lane — and that's the point. I've moved between <strong>civic tech and federal government</strong>, between <strong>Harvard research and W3C standards rooms</strong>, between <strong>World Bank country missions and engineering sprints</strong>. That range isn't a bug. It's the reason I can do things that specialists can't.</p>
+
+      <div class="pullquote">"The world is always reshuffling, so it constantly needs redesign."</div>
+
+      <p>I started in the web itself: four years at <strong>W3C Brazil</strong>, where I chaired the Data on the Web Best Practices working group, coordinating 30+ people across 3 years and growing Latin American W3C participation by 60%. Before that, I co-founded <strong>Calango Hackerspace</strong> in Brasília, which is still running.</p>
+
+      <p>In 2017, I took the CEO role at <strong>Serenata de Amor</strong> — transforming a civic AI experiment into a B-Corp in under two years, securing funding, managing the acquisition, and putting AI accountability on Brazil's national agenda. Simultaneously I was a fellow at the <strong>Berkman Klein Center</strong> (2016–2018), and then a full scholarship student at <strong>Harvard Kennedy School</strong> (2018–2020), where I led research on YouTube's influence on Brazilian elections (in partnership with the New York Times), digital identity for indigenous citizens, and algorithmic fairness in credit scoring.</p>
+
+      <p>From Harvard I went to the <strong>World Bank</strong> — first as Agile & Civic Tech Fellow (2019–2020), delivering AI and fraud detection guidelines across five countries, then as Data & Digital Transformation Consultant (2020–2021), building digital infrastructure in response to COVID across developing countries.</p>
+
+      <p>At <strong>Unico IDtech</strong>, one of Latin America's main Identity-as-a-service companies, I was the Principal Privacy & Digital ID Researcher reporting to the CTO, transforming a biometrics company into a privacy-oriented enterprise: company-wide privacy strategy, PETs applications, threat modeling, and academic research partnerships.</p>
+
+      <p>Since 2026, at <strong>Dataprev</strong>, Brazil's federal social security IT agency, I've redirected national age verification tech from biometric surveillance to W3C standards-based verifiable credentials.</p>
+    </div>
+    <div class="credentials">
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://cyber.harvard.edu/people/ycordova" target="_blank" style="color: var(--text);">Harvard Kennedy School · Berkman Klein · Ash Center ↗</a></div>
+          <div class="cred-sub">Berkman Klein Fellow, 2016–2018 · MPA full scholarship, 2018–2020 · YouTube/elections research with NYT · Indigenous digital identity · Algorithmic fairness in credit scoring</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://sloanreview.mit.edu/panelist/yasodara-cordova/" target="_blank" style="color: var(--text);">MIT Sloan Management Review — Responsible AI Panel ↗</a></div>
+          <div class="cred-sub">Named panelist on AI governance research · Contributing to responsible AI policy statements</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://www.w3.org/TR/dwbp/" target="_blank" style="color: var(--text);">W3C · Data on the Web Best Practices ↗</a></div>
+          <div class="cred-sub">Chair, 2012–2016 · Coordinated 30+ contributors globally · Grew Latin American participation 60%</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title">Carnegie Mellon University</div>
+          <div class="cred-sub">Privacy Engineering Certificate, 2021 · School of Computer Science</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://blogs.worldbank.org/en/team/y/yasodara-cordova" target="_blank" style="color: var(--text);">World Bank Group ↗</a></div>
+          <div class="cred-sub">Agile & Civic Tech Fellow (2019–2020) → Data & Digital Transformation Consultant (2020–2021)</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://www.codevelop.fund/yasodara-cordova" target="_blank" style="color: var(--text);">Co-DevelopFund — Investment Committee ↗</a></div>
+          <div class="cred-sub">Board seat · Advising on portfolio strategy and investment decisions · 2023–Present</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">◈</div>
+        <div>
+          <div class="cred-title"><a href="https://www.terrapinn.com/exhibition/identity-week/2026-SpeakersProgramme-Committee.stm" target="_blank" style="color: var(--text);">Identity Week Europe 2026 ↗</a></div>
+          <div class="cred-sub">Invited Speaker · Digital ID in Government panel · London</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise-section" style="padding: 80px 48px;">
+  <div class="section-header" style="margin-bottom: 40px;">
+    <span class="section-num">02</span>
+    <h2>Expertise</h2>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-cell">
+      <div class="expertise-label">Product</div>
+      <div class="expertise-title">Trust & Safety Product Leadership</div>
+      <div class="expertise-desc">Building products where the core design problem is trust: from civic AI fraud detection to privacy-as-product strategy at scale, with a foundation in industrial design and user research.</div>
+      <div class="expertise-tags">
+        <span class="tag">Trust & Safety</span>
+        <span class="tag">Fraud Detection</span>
+        <span class="tag">Privacy-as-Product</span>
+        <span class="tag">Roadmaps</span>
+        <span class="tag">Industrial Design</span>
+      </div>
+    </div>
+    <div class="expertise-cell">
+      <div class="expertise-label">Technical</div>
+      <div class="expertise-title">Privacy & Identity Engineering</div>
+      <div class="expertise-desc">Privacy-enhancing technologies and digital identity systems implemented at government scale — from threat modeling to W3C standards deployment.</div>
+      <div class="expertise-tags">
+        <span class="tag">Differential Privacy</span>
+        <span class="tag">W3C VCs</span>
+        <span class="tag">Threat Modeling</span>
+        <span class="tag">PETs</span>
+        <span class="tag">LGPD/GDPR</span>
+      </div>
+    </div>
+    <div class="expertise-cell">
+      <div class="expertise-label">Emerging</div>
+      <div class="expertise-title">AI Governance & Data Ethics</div>
+      <div class="expertise-desc">Translating AI accountability from research into policy and product — from algorithmic fairness in credit scoring to YouTube's influence on elections.</div>
+      <div class="expertise-tags">
+        <span class="tag">AI Transparency</span>
+        <span class="tag">Algorithmic Fairness</span>
+        <span class="tag">Data Ethics</span>
+        <span class="tag">Trust & Safety</span>
+      </div>
+    </div>
+    <div class="expertise-cell">
+      <div class="expertise-label">Standards</div>
+      <div class="expertise-title">Open Standards Development</div>
+      <div class="expertise-desc">Building multi-stakeholder consensus in W3C working groups and international bodies — making contested technical questions into durable, implementable standards.</div>
+      <div class="expertise-tags">
+        <span class="tag">W3C Chair</span>
+        <span class="tag">Open Standards</span>
+        <span class="tag">Linked Data</span>
+        <span class="tag">Web Payments</span>
+      </div>
+    </div>
+    <div class="expertise-cell">
+      <div class="expertise-label">Domain</div>
+      <div class="expertise-title">Government Digital Transformation</div>
+      <div class="expertise-desc">Translating international standards into implementable government architecture — across divergent legal, political, and infrastructure contexts worldwide.</div>
+      <div class="expertise-tags">
+        <span class="tag">GovTech</span>
+        <span class="tag">World Bank</span>
+        <span class="tag">Public Sector</span>
+        <span class="tag">Latin America</span>
+        <span class="tag">Africa</span>
+        <span class="tag">Asia</span>
+      </div>
+    </div>
+    <div class="expertise-cell">
+      <div class="expertise-label">Leadership</div>
+      <div class="expertise-title">Research & Policy Translation</div>
+      <div class="expertise-desc">Harvard-trained researcher who turns academic findings into product decisions and policy frameworks — and back again. From NYT partnerships to W3C chairs.</div>
+      <div class="expertise-tags">
+        <span class="tag">Harvard KSG</span>
+        <span class="tag">Berkman Klein</span>
+        <span class="tag">Policy Design</span>
+        <span class="tag">Public Speaking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Selected Work</h2>
+  </div>
+  <div class="work-grid">
+
+    <!-- Featured -->
+    <div class="project-card featured">
+      <div>
+        <div class="project-meta">
+          <span class="project-year">2026–Present</span>
+          <span class="project-status status-active">In Progress</span>
+        </div>
+        <div class="project-title">Brazil's National Verifiable Credentials Infrastructure</div>
+        <p class="project-desc">As Deputy Director of Privacy & Digital Identity at Dataprev — Brazil's federal social security IT agency — architected the strategic pivot of national age verification from biometric collection to W3C standards-based verifiable credentials. Reporting directly to the company president.</p>
+      </div>
+      <div class="project-impact">
+        <div class="impact-item">Redirected national government approach from surveillance-adjacent biometrics to privacy-preserving W3C VCs</div>
+        <div class="impact-item">Designed interoperable architecture compatible with eIDAS 2.0 for future EU alignment</div>
+        <div class="impact-item">Delivered implementable architecture built to outlast any single administration</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-year">2021–2025</span>
+        <span class="project-status status-complete">Complete</span>
+      </div>
+      <div class="project-title">Unico IDtech — Privacy Transformation</div>
+      <p class="project-desc">As Principal Privacy & Digital ID Researcher at Latin America's 2nd largest SaaS, reporting to the CTO: transformed a biometrics company into a privacy-oriented enterprise. Delivered company-wide privacy strategy, PETS research and strategic scenario, privacy threat modeling, and academic research partnerships.</p>
+      <div class="expertise-tags">
+        <span class="tag">Privacy enhancing tech</span>
+        <span class="tag">Threat Modeling</span>
+        <span class="tag">Privacy Strategy</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-year">2016–2020</span>
+        <span class="project-status status-complete">Complete</span>
+      </div>
+      <div class="project-title">Harvard Kennedy School · Berkman Klein</div>
+      <p class="project-desc">Berkman Klein Fellow (2016–2018) then full scholarship MPA student at Harvard Kennedy School (2018–2020). Investigated YouTube's influence on Brazilian elections in partnership with the New York Times, with results that directly impacted YouTube's services. Also researched digital identity for indigenous citizenship and algorithmic fairness.</p>
+      <div class="expertise-tags">
+        <span class="tag">NYT Partnership</span>
+        <span class="tag">Algorithmic Fairness</span>
+        <span class="tag">Digital Identity</span>
+        <span class="tag">Data Governance</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-year">2019–2021</span>
+        <span class="project-status status-complete">Complete</span>
+      </div>
+      <div class="project-title">World Bank — Civic Tech & Digital Infrastructure</div>
+      <p class="project-desc">Two consecutive roles: Agile & Civic Tech Fellow delivering AI fraud detection guidelines across 5+ countries; then Data & Digital Transformation Consultant accelerating digital infrastructure in response to COVID across developing nations, establishing strategy and roadmaps in record time.</p>
+      <div class="expertise-tags">
+        <span class="tag">GovTech</span>
+        <span class="tag">AI Policy</span>
+        <span class="tag">COVID Response</span>
+        <span class="tag">5+ Countries</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-year">2017–2019</span>
+        <span class="project-status status-complete">Complete</span>
+      </div>
+      <div class="project-title">Serenata de Amor — CEO</div>
+      <p class="project-desc">Led Operation Serenata de Amor as CEO — a civic AI project using machine learning to audit Brazilian congressional expenses. Transformed it into a certified B-Corp in under two years, secured funding, managed strategic partnerships, and orchestrated the project's acquisition.</p>
+      <div class="expertise-tags">
+        <span class="tag">Civic AI</span>
+        <span class="tag">B-Corp</span>
+        <span class="tag">Open Data</span>
+        <span class="tag">AI Transparency</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SPEAKING -->
+<section id="speaking" style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0 0 100px;">
+
+
+  <!-- Carousel -->
+  <div class="speaking-carousel">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide">
+        <img src="speaking.jpg" alt="Yasodara Córdova speaking on stage" class="carousel-img">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">SXSW · Austin, TX</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="wef.jpg" alt="Yasodara Córdova at the World Economic Forum in Geneva" class="carousel-img">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">World Economic Forum · Geneva</div>
+      </div>
+    </div>
+    <div class="carousel-content">
+      <div class="section-header" style="margin-bottom: 12px;">
+        <span class="section-num" style="color: rgba(255,255,255,0.35);">04</span>
+        <h2 style="color: #fff;">Speaking</h2>
+      </div>
+      <p class="speaking-hero-sub">International stages, technical tracks, and policy rooms — in Portuguese, English, Spanish, and French.</p>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="prevBtn" onclick="moveCarousel(-1)" aria-label="Previous">←</button>
+      <div class="carousel-dots">
+        <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+        <span class="carousel-dot" onclick="goToSlide(1)"></span>
+      </div>
+      <button class="carousel-btn" id="nextBtn" onclick="moveCarousel(1)" aria-label="Next">→</button>
+    </div>
+  </div>
+
+  <div style="padding: 0 48px;">
+  <div class="speaking-list">
+    <div class="talk-row">
+      <div class="talk-date">Jun 2026</div>
+      <div class="talk-content">
+        <div class="talk-title">Synthetic Humans, Real Harm: Trust & Safety in Identity Systems</div>
+        <div class="talk-event">Identity Week Europe · Amsterdam</div>
+      </div>
+      <div class="talk-tag">Upcoming</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Mar 2026</div>
+      <div class="talk-content">
+        <div class="talk-title">From the Handwritten ID Card to the Deepfake — and What Was Lost Along the Way</div>
+        <div class="talk-event">Certta Connection · São Paulo</div>
+      </div>
+      <div class="talk-tag">Upcoming</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Mar 2025</div>
+      <div class="talk-content">
+        <div class="talk-title"><a href="https://schedule.sxsw.com/2025/contributors/2080725" target="_blank" style="color: var(--text);">Protecting Digital Identity When Disasters Strike ↗</a></div>
+        <div class="talk-event">SXSW · Austin, TX</div>
+      </div>
+      <div class="talk-tag">SXSW</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Mar 2024</div>
+      <div class="talk-content">
+        <div class="talk-title"><a href="https://schedule.sxsw.com/2024/contributors/2080725" target="_blank" style="color: var(--text);">Privacy and AI: Taking Back Control Of Our Data ↗</a></div>
+        <div class="talk-event">SXSW · Austin, TX · Room at capacity — encore session same day</div>
+      </div>
+      <div class="talk-tag">SXSW</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Mar 2023</div>
+      <div class="talk-content">
+        <div class="talk-title"><a href="https://schedule.sxsw.com/2023/contributors/2080725" target="_blank" style="color: var(--text);">Breaking Paradigms About The Future of Digital ID ↗</a></div>
+        <div class="talk-event">SXSW · Austin, TX</div>
+      </div>
+      <div class="talk-tag">SXSW</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Nov 2024</div>
+      <div class="talk-content">
+        <div class="talk-title">Global Business Outlook — Risks & Opportunities for 2025</div>
+        <div class="talk-event">World Economic Forum · Strategic Intelligence Outlook · Geneva</div>
+      </div>
+      <div class="talk-tag">WEF</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">Oct 2025</div>
+      <div class="talk-content">
+        <div class="talk-title">Leadership in Technology Times: What's with Digital Democracy?</div>
+        <div class="talk-event">BRASA Summit Américas · Boston, MA</div>
+      </div>
+      <div class="talk-tag">Democracy</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">2019</div>
+      <div class="talk-content">
+        <div class="talk-title">Data for Public Policies: Lessons from Brazil</div>
+        <div class="talk-event">Harvard Kennedy School · Digital HKS Seminar</div>
+      </div>
+      <div class="talk-tag">Research</div>
+    </div>
+
+    <div class="talk-row">
+      <div class="talk-date">2017</div>
+      <div class="talk-content">
+        <div class="talk-title">Architecture for AI Transparency: The Serenata de Amor Operation</div>
+        <div class="talk-event">MIT Media Lab · AI Ideas Exchange</div>
+      </div>
+      <div class="talk-tag">AI</div>
+    </div>
+  </div><!-- end speaking-list -->
+  </div><!-- end padding wrapper -->
+</section>
+
+<!-- WRITING -->
+<section id="writing">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Writing</h2>
+  </div>
+
+  <div class="writing-grid">
+    <div class="writing-card">
+      <div class="writing-pub">KU Leuven AI Summer School · Jun 2024</div>
+      <div class="writing-title">AI Voice Replication: Bridging Familiarity and Ethics in a Digitally Enhanced World</div>
+      <p class="writing-desc">Co-authored piece examining the ethical, legal and societal risks of AI voice replication — from grief tech and digital personhood to copyright, privacy, and the fragmented global regulatory landscape.</p>
+      <div class="writing-meta">
+        <span>AI Ethics · Law · Trust</span>
+        <a href="https://www.law.kuleuven.be/ai-summer-school/blogpost/Blogposts/ai-voice-replication-bridging-familiarity-and-ethics-in-a-digitally-enhanced-world" class="writing-link" target="_blank">Read →</a>
+      </div>
+    </div>
+
+    <div class="writing-card">
+      <div class="writing-pub">Policy Options · IRPP · May 2018</div>
+      <div class="writing-title">Minimize Harmfulness of Bots but Don't Ban Them</div>
+      <p class="writing-desc">Co-authored with a Harvard Kennedy School colleague — arguing that blanket bot bans miss the point: the problem is opacity, not automation. Transparency and accountability over prohibition.</p>
+      <div class="writing-meta">
+        <span>Democracy · Bots · Policy</span>
+        <a href="https://policyoptions.irpp.org/2018/05/minimize-harmfulness-bots-dont-ban/" class="writing-link" target="_blank">Read →</a>
+      </div>
+    </div>
+
+    <div class="writing-card">
+      <div class="writing-pub">Medium · 2017</div>
+      <div class="writing-title">Technical Considerations on Public Consultation for Law-Making</div>
+      <p class="writing-desc">How AI tools can make public consultation more meaningful — and the structural reforms needed before they can. From fintech regulation to democratic participation.</p>
+      <div class="writing-meta">
+        <span>Policy · AI</span>
+        <a href="https://medium.com/@yaso/some-technical-considerations-on-public-consultation-for-law-making-as-it-is-and-as-it-should-be-49c635099d94" class="writing-link" target="_blank">Read →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Let's build<br>trust <em>together.</em></h2>
+      <p class="contact-desc">If you're working on something that sits at the intersection of technology, policy, and trust — and you need someone who can navigate all three — let's talk.</p>
+
+      <div class="contact-links">
+        <a href="mailto:who@yaso.is" class="contact-link">
+          <div class="contact-link-icon">@</div>
+          <div>
+            <div class="contact-link-label">who@yaso.is</div>
+            <div class="contact-link-sub">Email — preferred</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/yasodara" class="contact-link" target="_blank">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-sub">linkedin.com/in/yasodara</div>
+          </div>
+        </a>
+        <a href="https://bsky.app/profile/yaso.is" class="contact-link" target="_blank">
+          <div class="contact-link-icon">☁</div>
+          <div>
+            <div class="contact-link-label">Bluesky</div>
+            <div class="contact-link-sub">@yaso.is</div>
+          </div>
+        </a>
+        <a href="https://yaso.substack.com/" class="contact-link" target="_blank">
+          <div class="contact-link-icon">✍</div>
+          <div>
+            <div class="contact-link-label">Blog — PT-BR</div>
+            <div class="contact-link-sub">yaso.substack.com</div>
+          </div>
+        </a>
+        <a class="contact-link" style="opacity: 0.4; cursor: default;">
+          <div class="contact-link-icon">✍</div>
+          <div>
+            <div class="contact-link-label">Blog — EN <span style="font-family: var(--mono); font-size: 10px; color: var(--accent); margin-left: 8px; letter-spacing: 0.08em;">COMING SOON</span></div>
+            <div class="contact-link-sub">launching this month</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="availability-card">
+      <div class="avail-label">
+        <div class="avail-dot"></div>
+        Available for select engagements
+      </div>
+      <div class="avail-title">Consulting, speaking & advisory work</div>
+      <p class="avail-desc">Open to short-term consulting, advisory roles, and speaking opportunities — particularly where technology, policy, and public interest intersect.</p>
+      <div class="avail-list">
+        <div class="avail-item">
+          <div class="avail-item-dot"></div>
+          Speaking — international conferences & executive events
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-dot"></div>
+          Advisory — privacy, digital identity, AI governance
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-dot"></div>
+          Consulting — standards strategy & policy translation
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-dot"></div>
+          Research partnerships & academic collaboration
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-dot"></div>
+          Travel-intensive engagements welcome
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Yasodara Córdova · yaso.github.io</div>
+  <ul class="footer-links">
+    <li><a href="https://linkedin.com/in/yasodara" target="_blank">LinkedIn</a></li>
+    <li><a href="https://bsky.app/profile/yaso.is" target="_blank">Bluesky</a></li>
+    <li><a href="https://yaso.substack.com/" target="_blank">Blog</a></li>
+    <li><a href="mailto:who@yaso.is">Email</a></li>
+  </ul>
+</footer>
+
+<script>
+  let current = 0;
+  const total = 2;
+
+  function updateCarousel() {
+    document.getElementById('carouselTrack').style.transform = `translateX(-${current * 50}%)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function moveCarousel(dir) {
+    current = (current + dir + total) % total;
+    updateCarousel();
+  }
+
+  function goToSlide(n) {
+    current = n;
+    updateCarousel();
+  }
+
+  // Auto-advance every 5 seconds
+  setInterval(() => moveCarousel(1), 5000);
+</script>
+</body>
+</html>
