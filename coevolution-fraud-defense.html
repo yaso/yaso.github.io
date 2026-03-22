@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-evolução: Fraude vs Defesa</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #07090f; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: monospace; }
+  #wrap { position: relative; width: 680px; max-width: 100vw; }
+  canvas { display: block; width: 100%; background: #07090f; border-radius: 12px; }
+  #legend { position: absolute; top: 16px; left: 20px; display: flex; gap: 20px; align-items: center; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .leg { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+  #phase { position: absolute; top: 16px; right: 20px; font-size: 11px; color: #555; text-align: right; line-height: 1.7; white-space: pre; }
+  #msg { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 13px; color: #aaa; white-space: nowrap; pointer-events: none; transition: opacity 0.4s; }
+  #controls { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
+  button {
+    background: transparent;
+    border: 0.5px solid #333;
+    color: #888;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  button:hover { background: #111; color: #ccc; }
+  button.active { border-color: #4a9eff; color: #4a9eff; }
+  #speed-label { font-size: 12px; color: #555; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="cv"></canvas>
+  <div id="legend">
+    <div class="leg"><div class="dot" style="background:#4a9eff"></div><span style="color:#8ab4d4">transações digitais</span></div>
+    <div class="leg"><div class="dot" style="background:#e24b4a"></div><span style="color:#c8898a">fraude</span></div>
+    <div class="leg"><div class="dot" style="background:#1d9e75"></div><span style="color:#6bbfa4">defesa</span></div>
+  </div>
+  <div id="phase"></div>
+  <div id="msg"></div>
+</div>
+<div id="controls">
+  <button id="btn-pause">pausar</button>
+  <button id="btn-restart">reiniciar</button>
+  <span id="speed-label">velocidade</span>
+  <input type="range" id="speed" min="1" max="4" value="2" step="1" style="width:80px;">
+  <span id="speed-val" style="font-size:12px;color:#666;">2×</span>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('cv');
+  const W = 680, H = 420;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  const MSGS = [
+    "digitalização expande a superfície de ataque",
+    "fraudes encontram os pontos cegos automaticamente",
+    "defesas se adaptam — mas sempre um passo atrás",
+    "fraudes evoluem em resposta ao novo controle",
+    "nenhum lado vence definitivamente",
+    "o sistema nunca estabiliza"
+  ];
+
+  const PHASES = [
+    { label: 'fase 1  digitalização acelera',         fraudTarget: 12, defenseTarget: 4,  duration: 240 },
+    { label: 'fase 2  fraudes identificam oportunidades', fraudTarget: 18, defenseTarget: 4,  duration: 280 },
+    { label: 'fase 3  defesas são implantadas',        fraudTarget: 18, defenseTarget: 14, duration: 280 },
+    { label: 'fase 4  fraudes se adaptam',             fraudTarget: 22, defenseTarget: 14, duration: 280 },
+    { label: 'fase 5  corrida armamentista contínua',  fraudTarget: 22, defenseTarget: 20, duration: 300 },
+  ];
+
+  let paused = false, speedMult = 2;
+  let t = 0, phase = 0, phaseTimer = 0, msgIdx = 0, msgTimer = 0;
+  let txs = [], frauds = [], defenses = [], catchEvents = [];
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  class Agent {
+    constructor(type) {
+      this.type = type;
+      this.x = rand(60, W - 60);
+      this.y = rand(60, H - 60);
+      this.vx = rand(-1, 1);
+      this.vy = rand(-1, 1);
+      this.trail = [];
+      this.size = type === 'tx' ? 4 : type === 'fraud' ? 5 : 4.5;
+      this.color = type === 'tx' ? '#4a9eff' : type === 'fraud' ? '#e24b4a' : '#1d9e75';
+    }
+    get speed() { return this.type === 'tx' ? 0.4 : this.type === 'fraud' ? 1.1 : 0.95; }
+  }
+
+  function init() {
+    txs = []; frauds = []; defenses = []; catchEvents = [];
+    phase = 0; phaseTimer = 0; msgIdx = 0; msgTimer = 0; t = 0;
+    for (let i = 0; i < 28; i++) txs.push(new Agent('tx'));
+    for (let i = 0; i < 6;  i++) frauds.push(new Agent('fraud'));
+    for (let i = 0; i < 4;  i++) defenses.push(new Agent('defense'));
+  }
+  init();
+
+  function nearest(agent, arr) {
+    let best = null, bd = Infinity;
+    for (const a of arr) {
+      const d = Math.hypot(a.x - agent.x, a.y - agent.y);
+      if (d < bd) { bd = d; best = a; }
+    }
+    return { agent: best, dist: bd };
+  }
+
+  function steer(agent, tx, ty, strength) {
+    const dx = tx - agent.x, dy = ty - agent.y;
+    const d = Math.hypot(dx, dy) + 0.001;
+    agent.vx = lerp(agent.vx, (dx / d) * agent.speed, strength);
+    agent.vy = lerp(agent.vy, (dy / d) * agent.speed, strength);
+  }
+
+  function wander(agent, str = 0.05) {
+    agent.vx += rand(-1, 1) * str;
+    agent.vy += rand(-1, 1) * str;
+  }
+
+  function clampSpeed(agent) {
+    const s = Math.hypot(agent.vx, agent.vy);
+    if (s > agent.speed) { agent.vx = agent.vx / s * agent.speed; agent.vy = agent.vy / s * agent.speed; }
+  }
+
+  function bounce(agent) {
+    if (agent.x < 20)    { agent.x = 20;    agent.vx =  Math.abs(agent.vx); }
+    if (agent.x > W - 20){ agent.x = W - 20; agent.vx = -Math.abs(agent.vx); }
+    if (agent.y < 44)    { agent.y = 44;    agent.vy =  Math.abs(agent.vy); }
+    if (agent.y > H - 30){ agent.y = H - 30; agent.vy = -Math.abs(agent.vy); }
+  }
+
+  function update() {
+    t++;
+    phaseTimer++;
+    msgTimer++;
+
+    if (msgTimer > 200) { msgTimer = 0; msgIdx = (msgIdx + 1) % MSGS.length; }
+
+    const ph = PHASES[phase % PHASES.length];
+    if (phaseTimer > ph.duration) { phase++; phaseTimer = 0; }
+    if (phase >= PHASES.length) phase = 0;
+
+    const curPh = PHASES[phase % PHASES.length];
+    document.getElementById('phase').textContent = curPh.label.replace('  ', '\n');
+
+    while (txs.length < 28) txs.push(new Agent('tx'));
+    while (frauds.length < curPh.fraudTarget) frauds.push(new Agent('fraud'));
+    while (defenses.length < curPh.defenseTarget) defenses.push(new Agent('defense'));
+    if (frauds.length   > curPh.fraudTarget   + 4) frauds.splice(0, 1);
+    if (defenses.length > curPh.defenseTarget + 2) defenses.splice(0, 1);
+
+    for (const f of frauds) {
+      const { agent: nt, dist: nd } = nearest(f, txs);
+      if (nt && nd < 120) steer(f, nt.x, nt.y, 0.08);
+      else wander(f, 0.12);
+      const { agent: nd2 } = nearest(f, defenses);
+      if (nd2 && Math.hypot(nd2.x - f.x, nd2.y - f.y) < 90)
+        steer(f, W / 2 + rand(-1, 1) * 200, H / 2 + rand(-1, 1) * 150, 0.04);
+      wander(f, 0.03);
+      clampSpeed(f);
+      f.x += f.vx; f.y += f.vy;
+      bounce(f);
+      f.trail.push({ x: f.x, y: f.y });
+      if (f.trail.length > 18) f.trail.shift();
+    }
+
+    for (const d of defenses) {
+      const { agent: nt, dist: nd } = nearest(d, frauds);
+      if (nt && nd < 180) steer(d, nt.x, nt.y, 0.07);
+      else wander(d, 0.1);
+      clampSpeed(d);
+      d.x += d.vx; d.y += d.vy;
+      bounce(d);
+      d.trail.push({ x: d.x, y: d.y });
+      if (d.trail.length > 14) d.trail.shift();
+    }
+
+    for (const tx of txs) {
+      const { agent: nf, dist: df } = nearest(tx, frauds);
+      if (nf && df < 60) steer(tx, tx.x + (tx.y - nf.y) * 0.5, tx.y - (tx.x - nf.x) * 0.5, 0.06);
+      else wander(tx, 0.06);
+      clampSpeed(tx);
+      tx.x += tx.vx; tx.y += tx.vy;
+      bounce(tx);
+    }
+
+    for (const f of frauds) {
+      for (const tx of txs) {
+        if (Math.hypot(f.x - tx.x, f.y - tx.y) < 12) {
+          catchEvents.push({ x: tx.x, y: tx.y, life: 30, type: 'fraud' });
+          tx.x = rand(60, W - 60); tx.y = rand(60, H - 60);
+          tx.vx = rand(-1, 1); tx.vy = rand(-1, 1);
+        }
+      }
+    }
+    for (const d of defenses) {
+      for (const f of frauds) {
+        if (Math.hypot(d.x - f.x, d.y - f.y) < 14) {
+          catchEvents.push({ x: f.x, y: f.y, life: 25, type: 'defense' });
+          f.x = rand(60, W - 60); f.y = rand(60, H - 60);
+          f.vx = rand(-1, 1); f.vy = rand(-1, 1);
+        }
+      }
+    }
+    catchEvents = catchEvents.filter(e => { e.life--; return e.life > 0; });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#07090f';
+    ctx.fillRect(0, 0, W, H);
+
+    for (const e of catchEvents) {
+      const r = (30 - e.life) / 30;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, r * 28, 0, Math.PI * 2);
+      ctx.fillStyle = e.type === 'fraud'
+        ? `rgba(226,75,74,${(1 - r) * 0.35})`
+        : `rgba(29,158,117,${(1 - r) * 0.35})`;
+      ctx.fill();
+    }
+
+    function drawGroup(agents, trailColor, dotColor, size) {
+      for (const a of agents) {
+        if (a.trail && a.trail.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(a.trail[0].x, a.trail[0].y);
+          for (let i = 1; i < a.trail.length; i++) ctx.lineTo(a.trail[i].x, a.trail[i].y);
+          ctx.strokeStyle = trailColor;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+      }
+    }
+
+    drawGroup(txs,     'rgba(74,158,255,0.12)',  '#4a9eff', 4);
+    drawGroup(frauds,  'rgba(226,75,74,0.18)',   '#e24b4a', 5);
+    drawGroup(defenses,'rgba(29,158,117,0.15)',  '#1d9e75', 4.5);
+
+    document.getElementById('msg').textContent = MSGS[msgIdx];
+  }
+
+  let raf;
+  function loop() {
+    if (!paused) {
+      for (let i = 0; i < speedMult; i++) update();
+      draw();
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  loop();
+
+  document.getElementById('btn-pause').addEventListener('click', function() {
+    paused = !paused;
+    this.textContent = paused ? 'continuar' : 'pausar';
+    this.classList.toggle('active', paused);
+  });
+
+  document.getElementById('btn-restart').addEventListener('click', () => { init(); });
+
+  const speedSlider = document.getElementById('speed');
+  const speedVal = document.getElementById('speed-val');
+  speedSlider.addEventListener('input', function() {
+    speedMult = parseInt(this.value);
+    speedVal.textContent = speedMult + '×';
+  });
+})();
+</script>
+</body>
+</html>
