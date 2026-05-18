@@ -1,775 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yasodara Córdova — Privacy Engineering & Digital Identity Systems</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link rel="stylesheet" type="text/css" media="print" href="css/print_styles.css">		
+		<style>
+			/* Two-column divider */
+			.conteudoHome .row {
+				display: flex;
+				flex-wrap: wrap;
+			}
 
-<style>
-  :root {
-    --bg: #0a0a08;
-    --bg2: #111110;
-    --bg3: #1a1a17;
-    --surface: #1e1e1b;
-    --border: rgba(255,255,255,0.08);
-    --border-strong: rgba(255,255,255,0.15);
-    --text: #e8e6df;
-    --text-muted: #888780;
-    --text-dim: #4a4946;
-    --accent: #f0a020;
-    --accent-dim: rgba(240,160,32,0.12);
-    --accent-hover: #f5b840;
-    --teal: #2db89a;
-    --serif: 'DM Serif Display', serif;
-    --sans: 'Instrument Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
-  }
+			/* Left column — right border acts as the divider */
+			.conteudoHome .row > .column:first-child {
+				border-right: 1px solid #D9C611;
+				padding-right: 2rem;
+			}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-  a { color: inherit; text-decoration: none; }
+			/* Right column — a little breathing room from the line */
+			.conteudoHome .row > .column:last-child {
+				padding-left: 2rem;
+			}
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 48px;
-    background: rgba(10,10,8,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
+			/* On small screens the columns stack, so hide the vertical line */
+			@media (max-width: 639px) {
+				.conteudoHome .row > .column:first-child {
+					border-right: none;
+					border-bottom: 1px solid #D9C611;
+					padding-right: 0;
+					padding-bottom: 2rem;
+					margin-bottom: 2rem;
+				}
+				.conteudoHome .row > .column:last-child {
+					padding-left: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="top-detail"></div>
+			<div class="row">
+				<div class="column small-12">
+				<div class="containerLogo">
+					<div class="detalheLogo">
+						<i class="icon-neuronioLogo"></i>
+						<h2>The world is always reshuffling,<br>so it constantly needs redesign</h2>
+					</div>
+					<ul class="listSocialMidias">
+						<li>
+							<a href="http://github.com/yaso">
+								<i class="icon-github"></i>
+							</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/yaso">
+								<i class="icon-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="https://medium.com/@yaso/">
+								<i class="fa fa-medium"></i>
+							</a>
+						</li>
+					</ul>
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 120px 48px 80px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(240,160,32,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-  .hero-content { position: relative; max-width: 900px; }
-  .hero-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-  }
-  h1 {
-    font-family: var(--serif);
-    font-size: clamp(52px, 5.5vw, 80px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-    color: var(--text);
-  }
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero-desc {
-    font-size: 19px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    max-width: 700px;
-    margin: 0 auto 40px;
-  }
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: var(--accent);
-    color: #0a0a08;
-    font-family: var(--sans);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    border-radius: 2px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 13px 28px;
-    border: 1px solid var(--border-strong);
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 2px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--accent); background: var(--accent-dim); }
+					<h6>Also, you can read my <a href="http://yaso.is/blog">blog</a>.</h6>
+				</div>
+				</div>
+			</div>
+		</header>
 
-  /* SECTION */
-  section {
-    padding: 100px 48px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 60px;
-  }
-  .section-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    flex-shrink: 0;
-  }
-  h2 {
-    font-family: var(--serif);
-    font-size: clamp(32px, 3.5vw, 48px);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
+		<main class="conteudoHome">
+			<div class="row">
+				<div class="column small-12 medium-6">
+				  <a name="who"></a>
+				  <article class="chamadasHome">
+						<h3>Hello.</h3>
+						<p>My name is Yasodara Córdova, known as Yaso. I work with technologies to improve the democratic process. Currently, I am a fellow at the <a href="https://projects.iq.harvard.edu/digitalhks/fellows">Digital Kennedy School at Harvard</a>, where I research Data for public Policies and Digital Identity. Also, I am a <a href="https://cyber.harvard.edu/">Berkman Klein Center</a> affiliated, and a fellow at the Center for Technology and Society (CTS) at FGV School of Law. I'm also former director of the <a href="https://en.wikipedia.org/wiki/Operation_Serenata_de_Amor">Serenata de Amor Operation</a></p>
+	 
+						<p>My wide range of interests go from data science to blockchain and cryptocurrencies, and my primary objective is to change the way governments function when they have Internet available. I believe in a world that offers equal opportunities for everyone, based on the human rights principles.</p>
+					</article>
 
-  /* WORK GRID */
-  .work-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 36px;
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.15s;
-  }
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--accent);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.3s;
-  }
-  .project-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
-  .project-card:hover::before { transform: scaleY(1); }
-  .project-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .project-year {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.06em;
-  }
-  .project-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.2;
-  }
-  .project-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.65;
-    margin-bottom: 20px;
-  }
-  .project-impact {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .impact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-  .impact-item::before {
-    content: '→';
-    color: var(--accent);
-    flex-shrink: 0;
-    font-family: var(--mono);
-    font-size: 12px;
-    margin-top: 2px;
-  }
+			      <a name="why"></a>
+				  <article class="chamadasHome">
+						<h3>Contact</h3>
+						<p>Does anyone use e-mail these days? If yes, use who at yaso dot is. Or, just send me a dm on <a href="https://www.twitter.com/yaso">Twitter!</a></p>
+					</article>
+				</div><!-- column -->
+				<div class="column small-12 medium-6">
+				    <a name="posts"></a>
+					<article class="chamadasHome posts">
+					  <h3>Recent Talks</h3>
+						<ul class="no-bullet">
+							<li>
+								<p class="dataPost">Out.2017</p>
+								<h4><a href="https://projects.iq.harvard.edu/digitalhks/blog/archive/all/201709">Architecture for AI transparency: the Serenata de Amor Operation</a></h4>
+								<p>Lunch Seminar at the Digital Kennedy School about the Serenata de Amor Operation and its architecture for "Transparent Artificial Intelligence"</p>
+							</li>
 
-  /* EXPERTISE */
-  .expertise-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .expertise-cell {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 32px;
-    border-radius: 2px;
-    transition: border-color 0.2s;
-  }
-  .expertise-cell:hover { border-color: var(--border-strong); }
-  .expertise-title {
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-  .expertise-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* CREDENTIALS */
-  .cred-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .cred-item {
-    display: flex;
-    gap: 16px;
-    padding: 20px 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    transition: border-color 0.2s;
-  }
-  .cred-item:hover { border-color: var(--border-strong); }
-  .cred-icon {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    flex-shrink: 0;
-    width: 32px;
-    margin-top: 2px;
-  }
-  .cred-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .cred-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-
-  /* SPEAKING */
-  .speaking-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .talk-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 32px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .talk-row:first-child { border-top: 1px solid var(--border); }
-  .talk-date {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
-    letter-spacing: 0.06em;
-  }
-  .talk-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-  .talk-event {
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-
-  /* CONTACT */
-  .contact-section {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    padding: 100px 48px;
-  }
-  .contact-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  .contact-heading {
-    font-family: var(--serif);
-    font-size: clamp(40px, 4vw, 60px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-  }
-  .contact-heading em { font-style: italic; color: var(--accent); }
-  .contact-desc {
-    font-size: 16px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 40px;
-  }
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    background: var(--surface);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .contact-link:hover { border-color: var(--accent); background: var(--accent-dim); }
-  .contact-link-icon {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--accent);
-    width: 20px;
-    flex-shrink: 0;
-  }
-  .contact-link-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-  }
-  .availability-card {
-    padding: 32px;
-    background: var(--surface);
-    border: 1px solid rgba(240,160,32,0.2);
-    border-radius: 2px;
-  }
-  .avail-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.3;
-  }
-  .avail-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.65;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 40px 48px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .footer-logo {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
-    letter-spacing: 0.06em;
-  }
-  .footer-links {
-    display: flex;
-    gap: 24px;
-    list-style: none;
-  }
-  .footer-links a {
-    font-size: 12px;
-    color: var(--text-dim);
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--text-muted); }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .nav-links { gap: 20px; }
-    .hero { padding: 100px 24px 60px; }
-    section { padding: 60px 24px; }
-    .work-grid { grid-template-columns: 1fr; }
-    .expertise-grid { grid-template-columns: 1fr; }
-    .cred-grid { grid-template-columns: 1fr; }
-    .talk-row { grid-template-columns: 80px 1fr; gap: 16px; }
-    .contact-section { padding: 60px 24px; }
-    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-    footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
-  }
-</style>
-</head>
-<body>
-
-<nav>
-  <div class="nav-logo">yaso.is</div>
-  <ul class="nav-links">
-    <li><a href="#credentials">Education</a></li>
-    <li><a href="#speaking">Speaking</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#contact">Contact</a></li>
-
-  </ul>
-</nav>
-
-<section class="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-content">
-    <div class="hero-label">Privacy Engineering & Digital Identity Systems</div>
-    <h1>Yasodara<br><em>Córdova</em></h1>
-    <p class="hero-desc">I build privacy-preserving digital identity infrastructure at government scale—from W3C international standards to systems serving millions across 100+ countries.</p>
-    <div class="hero-cta">
-      <a href="#speaking" class="btn-primary">View Work →</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
-    </div>
-  </div>
-</section>
-
-<section id="credentials">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2>Education & Recognition</h2>
-  </div>
-  <div class="cred-grid">
-    
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">Harvard Kennedy School</div>
-        <div class="cred-sub">MPA, Full Scholarship (2020-2022) • Mason Fellow • Berkman Klein Center Fellow (2016-2018)</div>
-      </div>
-    </div>
-
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">Carnegie Mellon University</div>
-        <div class="cred-sub">Privacy Engineering Certificate (2021) • School of Computer Science</div>
-      </div>
-    </div>
-
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">W3C Standards Leadership</div>
-        <div class="cred-sub">First Brazilian to Chair W3C Working Group • Data on the Web Best Practices (2013-2016)</div>
-      </div>
-    </div>
-
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">MIT Sloan Management Review</div>
-        <div class="cred-sub">Named Panelist on AI Governance Research</div>
-      </div>
-    </div>
-
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">Co-Develop Fund</div>
-        <div class="cred-sub">Investment Committee Member (2023-Present)</div>
-      </div>
-    </div>
-
-    <div class="cred-item">
-      <div class="cred-icon">◈</div>
-      <div>
-        <div class="cred-title">Vladimir Herzog Award</div>
-        <div class="cred-sub">2x Winner (2008, 2009) • Journalism & Human Rights</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="speaking">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2>Speaking</h2>
-  </div>
-  <p style="color: var(--text-muted); margin-bottom: 40px; max-width: 700px;">International conferences and executive events — delivering technical talks on privacy, digital identity, and AI governance in Portuguese, English, Spanish, and French.</p>
-  
-  <div class="speaking-list">
-    <div class="talk-row">
-      <div class="talk-date">Jun 2026</div>
-      <div>
-        <div class="talk-title">Synthetic Humans, Real Harm: Trust & Safety in Identity Systems</div>
-        <div class="talk-event">Identity Week Europe • Amsterdam</div>
-      </div>
-    </div>
-
-    <div class="talk-row">
-      <div class="talk-date">Mar 2025</div>
-      <div>
-        <div class="talk-title">Protecting Digital Identity When Disasters Strike</div>
-        <div class="talk-event">SXSW • Austin, TX</div>
-      </div>
-    </div>
-
-    <div class="talk-row">
-      <div class="talk-date">Mar 2024</div>
-      <div>
-        <div class="talk-title">Privacy and AI: Taking Back Control Of Our Data</div>
-        <div class="talk-event">SXSW • Austin, TX • Room at capacity, encore session same day</div>
-      </div>
-    </div>
-
-    <div class="talk-row">
-      <div class="talk-date">Nov 2024</div>
-      <div>
-        <div class="talk-title">Global Business Outlook — Risks & Opportunities for 2025</div>
-        <div class="talk-event">World Economic Forum • Strategic Intelligence Outlook • Geneva</div>
-      </div>
-    </div>
-
-    <div class="talk-row">
-      <div class="talk-date">2017</div>
-      <div>
-        <div class="talk-title">Architecture for AI Transparency: The Serenata de Amor Operation</div>
-        <div class="talk-event">MIT Media Lab • AI Ideas Exchange</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="work">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2>Selected Work</h2>
-  </div>
-  <div class="work-grid">
-    
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2024–Present</span>
-      </div>
-      <div class="project-title">Brazil's National Verifiable Credentials Infrastructure</div>
-      <p class="project-desc">Deputy Director at Dataprev, Brazil's federal social security IT agency. Architected national shift from biometric surveillance to W3C standards-based verifiable credentials for age verification.</p>
-      <div class="project-impact">
-        <div class="impact-item">200M+ potential users impacted</div>
-        <div class="impact-item">Designed eIDAS 2.0-compatible architecture</div>
-        <div class="impact-item">Reporting directly to company president</div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2021–2024</span>
-      </div>
-      <div class="project-title">Privacy Transformation at Unico IDtech</div>
-      <p class="project-desc">Principal Privacy & Digital ID Researcher at Latin America's 2nd largest identity SaaS. Led company-wide privacy strategy, PETs research, threat modeling.</p>
-      <div class="project-impact">
-        <div class="impact-item">Transformed biometrics company into privacy-first enterprise</div>
-        <div class="impact-item">Established academic research partnerships</div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2013–2016</span>
-      </div>
-      <div class="project-title">W3C Data Standards Leadership</div>
-      <p class="project-desc">First Brazilian to chair W3C Working Group. Led Data on the Web Best Practices, coordinating 30+ international contributors to published W3C Recommendation.</p>
-      <div class="project-impact">
-        <div class="impact-item">60% growth in Latin American W3C participation</div>
-        <div class="impact-item">Global standards adopted worldwide</div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2019–2021</span>
-      </div>
-      <div class="project-title">World Bank Digital Infrastructure</div>
-      <p class="project-desc">Delivered privacy-by-design frameworks for digital ID systems across 5+ countries. Coordinated COVID-19 digital response and AI fraud detection guidelines.</p>
-      <div class="project-impact">
-        <div class="impact-item">100+ countries implementation experience</div>
-        <div class="impact-item">Accelerated digital transformation in developing nations</div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2016–2020</span>
-      </div>
-      <div class="project-title">Harvard Research & NYT Partnership</div>
-      <p class="project-desc">Berkman Klein Fellow and Harvard Kennedy School MPA (full scholarship). Led YouTube/elections research with New York Times. Investigated algorithmic fairness and digital identity for indigenous citizens.</p>
-      <div class="project-impact">
-        <div class="impact-item">Research directly impacted YouTube services</div>
-        <div class="impact-item">Published findings in major media</div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-meta">
-        <span class="project-year">2016–2018</span>
-      </div>
-      <div class="project-title">Serenata de Amor — Civic AI Leadership</div>
-      <p class="project-desc">CEO of civic AI project auditing Brazilian congressional expenses. Transformed experiment into certified B-Corp, secured funding, managed acquisition by Open Knowledge Foundation.</p>
-      <div class="project-impact">
-        <div class="impact-item">National AI accountability agenda</div>
-        <div class="impact-item">Presented at Brazilian Congress</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="expertise">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <h2>Expertise</h2>
-  </div>
-  <div class="expertise-grid">
-    
-    <div class="expertise-cell">
-      <div class="expertise-title">Privacy Engineering</div>
-      <div class="expertise-desc">Privacy-enhancing technologies, threat modeling, differential privacy, GDPR/LGPD compliance. Implementation at government scale with W3C standards deployment.</div>
-    </div>
-
-    <div class="expertise-cell">
-      <div class="expertise-title">Digital Identity Systems</div>
-      <div class="expertise-desc">W3C Verifiable Credentials, ISO 18013-5, eIDAS alignment, MOSIP. Cross-functional coordination across engineering, legal, and policy teams.</div>
-    </div>
-
-    <div class="expertise-cell">
-      <div class="expertise-title">International Standards</div>
-      <div class="expertise-desc">W3C Working Group chair experience. Multi-stakeholder consensus building in international bodies. Open standards development and policy translation.</div>
-    </div>
-
-    <div class="expertise-cell">
-      <div class="expertise-title">AI Governance</div>
-      <div class="expertise-desc">Algorithmic fairness, AI transparency, data ethics. Translating research into policy and product decisions for responsible AI implementation.</div>
-    </div>
-
-    <div class="expertise-cell">
-      <div class="expertise-title">Government Digital Transformation</div>
-      <div class="expertise-desc">Translating international standards into implementable government architecture. Experience across 100+ countries in Latin America, Africa, and Asia.</div>
-    </div>
-
-    <div class="expertise-cell">
-      <div class="expertise-title">Trust & Safety</div>
-      <div class="expertise-desc">Product leadership for systems where trust is the core design problem. From civic AI fraud detection to privacy-as-product strategy at scale.</div>
-    </div>
-
-  </div>
-</section>
-
-<section id="contact" class="contact-section">
-  <div class="contact-inner">
-    <div>
-      <h2 class="contact-heading">Let's build trust<br><em>together.</em></h2>
-      <p class="contact-desc">Available for speaking engagements, advisory work, and consulting on privacy engineering, digital identity systems, and AI governance.</p>
-      
-      <div class="contact-links">
-        <a href="/cdn-cgi/l/email-protection#1166797e516870627e3f7862" class="contact-link">
-          <div class="contact-link-icon">@</div>
-          <div class="contact-link-label"><span class="__cf_email__" data-cfemail="05726d6a457c64766a2b6c76">[email&#160;protected]</span></div>
-        </a>
-        <a href="https://linkedin.com/in/yasodara" class="contact-link" target="_blank">
-          <div class="contact-link-icon">in</div>
-          <div class="contact-link-label">linkedin.com/in/yasodara</div>
-        </a>
-        <a href="https://bsky.app/profile/yaso.is" class="contact-link" target="_blank">
-          <div class="contact-link-icon">☁</div>
-          <div class="contact-link-label">@yaso.is</div>
-        </a>
-      </div>
-    </div>
-
-    <div class="availability-card">
-      <div class="avail-title">Open to select engagements</div>
-      <p class="avail-desc">Speaking at international conferences and executive events. Advisory roles in privacy engineering, digital identity, and AI governance. Consulting on standards strategy and policy translation. Research partnerships welcome.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-logo">Yasodara Córdova • yaso.is</div>
-  <ul class="footer-links">
-    <li><a href="https://linkedin.com/in/yasodara" target="_blank">LinkedIn</a></li>
-    <li><a href="https://bsky.app/profile/yaso.is" t
+							<li>
+								<p class="dataPost">Set.2017</p>
+								<h4><a href="https://cyber.harvard.edu/research/ai">Architecture for AI transparency: the Serenata de Amor Operation</a></h4>
+								<p>Talk at the MIT Media Lab at the AI ideas exchange uncolloquium.</p>
+							</li>
+							<li>
+								<p class="dataPost">Ago.2017</p>
+								<h4><a href="http://www.enap.gov.br/web/pt-br/noticias/-/asset_publisher/LviHFVBrASPU/content/enap-e-kennedy-school-promovem-dialogo-internacional-sobre-tecnologia-regulacao-e-politicas-publicas/586010">ENAP/Kennedy School</a></h4>
+								<p>International Dialogues on Technology, Regulation and Public Policies</p>
+							</li>
+							<li>
+								<p class="dataPost">Ago.2017</p>
+								<h4><a href="https://medium.com/@yaso/some-technical-considerations-on-public-consultation-for-law-making-as-it-is-and-as-it-should-be-49c635099d94">Fintechs and Regulation for Innovation</a></h4>
+								<p>Talk at the FGV Law School on innovation and cryptocurrencies</p>
+							</li>
+							<li>
+								<p class="dataPost">Ago.2017</p>
+								<h4><a href="http://www.internetlab.org.br/en/">Cryptocurrencies and the Decentralized Future</a></h4>
+							<p>Talk at the Internet Lab, Law and Technology research Center, about decentralization and the financial sector</p>
+							</li>
+							<li>
+								<p class="dataPost">Set.2016</p>
+								<h4><a href="https://cyber.harvard.edu/events/2016/12/Algorithms">AI and Participative Law Making Processes</a></h4>
+							<p>Harvard Law School, AI for participative Law Making process</p>
+							</li>
+						</ul>
+					</article>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="menu">
+				<div class="row">
+					<div class="columns small-12">
+					  	<ul>
+					    	<li><a href="index.html">~:$ home</a></li>		
+							<li><a href="https://github.com/yaso/yaso.github.io/blob/master/Resume-Mar2019.pdf">~:$ Resume</a></li>
+							<li><a href="portfolio.html">~:$ Portfolio</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="info">
+				<div class="row">
+					<div class="columns small-12">
+						<p>There's something you want to use? Great! Be elegant and ask me first!</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+	</body>
+</html>
